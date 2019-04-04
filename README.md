@@ -1,6 +1,6 @@
 # Lab7-CAN Part 2
 CAN interface  
-Exploring basic configuration, messages and filters 
+Implementing a simple three station network.  
 
 Requires:  
 * Explorer 18 Board
