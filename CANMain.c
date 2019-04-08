@@ -75,7 +75,7 @@ void ConfigCAN(void) {
 
     //Set up Mask and filters for RB1
     RXM1SIDH = 0b00000000;
-    RXM1SIDLbits.SID = 0b000; //Mask is set to all ones so filter must match
+    RXM1SIDLbits.SID = 0b000; 
     RXF2SIDLbits.EXIDEN = RXF3SIDLbits.EXIDEN = RXF4SIDLbits.EXIDEN
             = RXF5SIDLbits.EXIDEN = 0; //Only accept standard messages in all filters
     //F2 - F5 accept 0x00
