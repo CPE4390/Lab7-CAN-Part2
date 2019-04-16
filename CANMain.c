@@ -32,9 +32,15 @@ void main(void) {
     INTCONbits.GIE = 1;
     while (1) {
         if (update) {
-            lprintf(1, "ID=%03x Data=%d", id, data);
+            //put code here to execute when a CAN message is received.
+            //The message id and data will be in the corresponding variables
             update = 0;
         }
+        //Code below can be used to get a value from the potentiometer.
+        //Remove it if you don't need this form of input
+        int knob = ReadPot();
+        lprintf(1, "P=%d", knob);
+        __delay_ms(200); //Need a delay to prevent flicker
     }
 }
 
@@ -74,8 +80,8 @@ void ConfigCAN(void) {
     RXF1SIDLbits.SID = 0b000;
 
     //Set up Mask and filters for RB1
-    RXM1SIDH = 0b00000000;
-    RXM1SIDLbits.SID = 0b000; 
+    RXM1SIDH = 0b11111111;
+    RXM1SIDLbits.SID = 0b111; 
     RXF2SIDLbits.EXIDEN = RXF3SIDLbits.EXIDEN = RXF4SIDLbits.EXIDEN
             = RXF5SIDLbits.EXIDEN = 0; //Only accept standard messages in all filters
     //F2 - F5 accept 0x00
@@ -90,7 +96,8 @@ void ConfigCAN(void) {
 
     //Set up buffers with filters
     RXB0CONbits.RXM1 = RXB0CONbits.RXM0 = 0; //accept all messages based on filter
-    RXB1CONbits.RXM1 = RXB1CONbits.RXM0 = 0; 
+    RXB1CONbits.RXM1 = 1;
+    RXB1CONbits.RXM0 = 0; //Shut off RXB1
 
     //Mark RX0 as empty so it is ready to receive
     RXB0CONbits.RXFUL = 0;
